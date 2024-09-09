@@ -1,0 +1,23 @@
+{
+    "name": "larabizcms/blog",
+    "description": "",
+    "authors": [
+        {
+            "name": "Larabiz CMS",
+            "email": "admin@larabiz.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "LarabizCMS\\Modules\\Blog\\": "src/"
+        }
+    }
+}
