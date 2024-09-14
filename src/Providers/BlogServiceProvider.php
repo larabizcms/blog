@@ -37,6 +37,8 @@ class BlogServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->bindingRepositories($this->app['config']->get('blog.repositories', []));
     }
 
     /**
@@ -47,10 +49,10 @@ class BlogServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/blog.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'config/blog.php') => config_path('blog.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'config/blog.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'config/blog.php'), 'blog'
         );
     }
 

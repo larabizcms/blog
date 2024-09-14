@@ -5,16 +5,21 @@ namespace LarabizCMS\Modules\Blog\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use LarabizCMS\Core\Http\Controllers\Controller;
+use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function __construct(
+        protected PostRepository $postRepository
+    ) {
+        //
+    }
+
+    public function index(Request $request)
     {
-        return view('blog::index');
+        return $this->restSuccess(
+            $this->postRepository->api($request->all())
+        );
     }
 
     /**
