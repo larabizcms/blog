@@ -3,11 +3,12 @@
 namespace LarabizCMS\Modules\Blog\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use LarabizCMS\Core\Http\Controllers\Controller;
+use LarabizCMS\Core\Http\Controllers\APIController;
 use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
-class PostController extends Controller
+class PostController extends APIController
 {
     public function __construct(
         protected PostRepository $postRepository
@@ -15,10 +16,11 @@ class PostController extends Controller
         //
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         return $this->restSuccess(
             $this->postRepository->api($request->all())
+                ->paginate($this->getQueryLimit($request))
         );
     }
 
@@ -32,14 +34,16 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function show(string $slug): JsonResponse
     {
-        return view('blog::show');
+        $post = $this->postRepository->api()
+            ->with(['translations' => fn ($q) => $q->where('locale', app()->getLocale())])
+            ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
+            ->first();
+
+        abort_if($post === null, 404, __('Post not found'));
+
+        return $this->restSuccess($post);
     }
 
     /**

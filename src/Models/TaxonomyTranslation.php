@@ -2,7 +2,7 @@
 
 namespace LarabizCMS\Modules\Blog\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use LarabizCMS\Core\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TaxonomyTranslation extends Model

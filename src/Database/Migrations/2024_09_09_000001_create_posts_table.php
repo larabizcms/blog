@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 50)->default('post');
-            $table->string('status')->default('draft');
+            $table->string('type', 50)->index()->default('post');
+            $table->string('status', 20)->index()->default('draft');
             $table->timestamps();
         });
 
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->id();
             $table->string('locale', 10);
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug', 190)->index();
             $table->text('content');
             $table->timestamps();
 

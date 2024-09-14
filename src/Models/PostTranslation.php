@@ -2,7 +2,7 @@
 
 namespace LarabizCMS\Modules\Blog\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use LarabizCMS\Core\Models\Model;
 
 class PostTranslation extends Model
 {

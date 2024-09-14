@@ -27,6 +27,7 @@ class BlogServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'src/Database/Migrations'));
+        $this->bindingRepositories($this->app['config']->get('blog.repositories', []));
     }
 
     /**
@@ -37,8 +38,6 @@ class BlogServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-
-        $this->bindingRepositories($this->app['config']->get('blog.repositories', []));
     }
 
     /**

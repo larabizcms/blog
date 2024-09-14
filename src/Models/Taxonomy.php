@@ -4,7 +4,7 @@ namespace LarabizCMS\Modules\Blog\Models;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
+use LarabizCMS\Core\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use LarabizCMS\LaravelModelHelper\Traits\HasAPI;
 

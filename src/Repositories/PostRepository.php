@@ -11,7 +11,11 @@ namespace LarabizCMS\Modules\Blog\Repositories;
 
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Repositories\Repository;
+use LarabizCMS\Modules\Blog\Models\Post;
 
+/**
+ * @mixin Post
+ */
 interface PostRepository extends Repository
 {
 
