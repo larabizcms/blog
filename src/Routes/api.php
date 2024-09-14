@@ -19,24 +19,16 @@ Route::group(
         'middleware' => ['api'],
     ],
     function () {
-        Route::get('posts', [PostController::class, 'index']);
+        Route::get('{type}', [PostController::class, 'index']);
 
-        Route::get('posts/{id}', [PostController::class, 'show']);
+        Route::get('{type}/{id}', [PostController::class, 'show']);
 
         Route::group(['middleware' => [...config('larabizcms.auth_middleware', [])]], function () {
-            Route::post('posts', [PostController::class, 'store']);
+            Route::post('{type}', [PostController::class, 'store']);
 
-            Route::put('posts/{id}', [PostController::class, 'update']);
+            Route::put('{type}/{id}', [PostController::class, 'update']);
+
+            Route::delete('{type}/{id}', [PostController::class, 'destroy']);
         });
     }
 );
-
-// Route::group(
-//     [
-//         'prefix' => 'blog',
-//         'middleware' => ['api'],
-//     ],
-//     function () {
-//         Route::apiResource('posts', \LarabizCMS\Modules\Blog\Http\Controllers\PostController::class);
-//     }
-// );

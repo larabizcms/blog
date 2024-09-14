@@ -5,6 +5,7 @@ namespace LarabizCMS\Modules\Blog\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use LarabizCMS\Core\Http\Controllers\APIController;
 use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
@@ -16,10 +17,13 @@ class PostController extends APIController
         //
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $type): JsonResponse
     {
+        $type = Str::singular($type);
+
         return $this->restSuccess(
             $this->postRepository->api($request->all())
+                ->where('type', $type)
                 ->paginate($this->getQueryLimit($request))
         );
     }
@@ -34,9 +38,12 @@ class PostController extends APIController
         //
     }
 
-    public function show(string $slug): JsonResponse
+    public function show(string $type, string $slug): JsonResponse
     {
+        $type = Str::singular($type);
+
         $post = $this->postRepository->api()
+            ->where('type', $type)
             ->with(['translations' => fn ($q) => $q->where('locale', app()->getLocale())])
             ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
             ->first();
@@ -62,7 +69,7 @@ class PostController extends APIController
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         //
     }
