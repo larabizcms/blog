@@ -2,8 +2,7 @@
 
 namespace LarabizCMS\Modules\Blog\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+use LarabizCMS\Core\Providers\ServiceProvider;
 
 class BlogServiceProvider extends ServiceProvider
 {
@@ -48,10 +47,10 @@ class BlogServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'config/blog.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'config/blog.php'), $this->moduleNameLower
         );
     }
 
