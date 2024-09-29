@@ -4,9 +4,9 @@ namespace LarabizCMS\Modules\Blog\Models;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use LarabizCMS\Core\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use LarabizCMS\LaravelModelHelper\Traits\HasAPI;
+use LarabizCMS\Core\Models\Model;
+use LarabizCMS\Core\Traits\HasAPI;
 
 class Taxonomy extends Model
 {

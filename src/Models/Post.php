@@ -5,7 +5,7 @@ namespace LarabizCMS\Modules\Blog\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use LarabizCMS\Core\Models\Model;
-use LarabizCMS\LaravelModelHelper\Traits\HasAPI;
+use LarabizCMS\Core\Traits\HasAPI;
 
 class Post extends Model
 {
