@@ -1,10 +1,12 @@
 {
     "name": "larabizcms/blog",
+    "type": "larabiz-module",
     "description": "",
     "authors": [
         {
             "name": "Larabiz CMS",
-            "email": "admin@larabiz.com"
+            "email": "admin@larabiz.com",
+            "url": "https://larabiz.com"
         }
     ],
     "extra": {
