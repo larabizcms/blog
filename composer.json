@@ -1,7 +1,7 @@
 {
     "name": "larabizcms/blog",
     "type": "larabiz-module",
-    "description": "",
+    "description": "Blog module for Larabiz CMS",
     "authors": [
         {
             "name": "Larabiz CMS",
@@ -9,14 +9,6 @@
             "url": "https://larabiz.com"
         }
     ],
-    "extra": {
-        "laravel": {
-            "providers": [],
-            "aliases": {
-
-            }
-        }
-    },
     "autoload": {
         "psr-4": {
             "LarabizCMS\\Modules\\Blog\\": "src/"
