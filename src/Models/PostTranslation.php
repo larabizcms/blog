@@ -3,10 +3,13 @@
 namespace LarabizCMS\Modules\Blog\Models;
 
 use LarabizCMS\Core\Models\Model;
+use LarabizCMS\Core\Traits\HasSlug;
 
 class PostTranslation extends Model
 {
-    protected $table = 'posts_translations';
+    use HasSlug;
+
+    protected $table = 'post_translations';
 
     protected $fillable = [
         'locale',
