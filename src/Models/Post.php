@@ -2,12 +2,12 @@
 
 namespace LarabizCMS\Modules\Blog\Models;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasAPI;
+use LarabizCMS\Core\Translations\Traits\Translatable;
 use LarabizCMS\Modules\Blog\Database\Factories\PostFactory;
 use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
 

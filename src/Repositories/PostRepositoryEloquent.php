@@ -16,7 +16,7 @@ use LarabizCMS\Modules\Blog\Models\Post;
 /**
  * @mixin Model
  */
-class PostEloquentRepository extends EloquentRepository implements PostRepository
+class PostRepositoryEloquent extends EloquentRepository implements PostRepository
 {
     public function model(): string
     {

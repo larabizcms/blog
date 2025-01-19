@@ -11,7 +11,9 @@
 |
 */
 
+use LarabizCMS\Core\Facades\RouteResource;
 use LarabizCMS\Modules\Blog\Http\Controllers\APIs\PostController;
+use LarabizCMS\Modules\Blog\Http\Controllers\APIs\TaxonomyController;
 
 Route::group(
     [
@@ -30,5 +32,8 @@ Route::group(
 
             Route::delete('{type}/{id}', [PostController::class, 'destroy']);
         });
+
+        RouteResource::api('taxonomies', TaxonomyController::class)
+            ->guestable();
     }
 );

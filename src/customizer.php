@@ -7,4 +7,11 @@
  * @link       https://larabiz.com
  */
 
-larabiz()->crud('posts', \LarabizCMS\Modules\Blog\Http\Controllers\Admin\PostController::class);
+use LarabizCMS\Modules\Blog\Http\Controllers\Admin\PostController;
+use LarabizCMS\Modules\Blog\Http\Controllers\Admin\TaxonomyController;
+
+larabiz()->crud('posts', PostController::class)
+    ->menuIcon('Article');
+
+larabiz()->crud('taxonomies', TaxonomyController::class)
+    ->menuIcon('Tag');
