@@ -10,8 +10,14 @@
 use LarabizCMS\Modules\Blog\Http\Controllers\Admin\PostController;
 use LarabizCMS\Modules\Blog\Http\Controllers\Admin\TaxonomyController;
 
+larabiz()->adminMenu('blog')
+    ->title('Blog')
+    ->icon('Article');
+
 larabiz()->crud('posts', PostController::class)
+    ->menuParent('blog')
     ->menuIcon('Article');
 
 larabiz()->crud('taxonomies', TaxonomyController::class)
+    ->menuParent('blog')
     ->menuIcon('Tag');
