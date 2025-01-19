@@ -24,6 +24,24 @@ enum PostStatus: string
         ];
     }
 
+    public static function options(): array
+    {
+        return [
+            self::PUBLISHED->value => __('Published'),
+            self::DRAFT->value => __('Draft'),
+            self::PENDING->value => __('Pending'),
+        ];
+    }
+
+    public function value(): string
+    {
+        return match ($this) {
+            self::PUBLISHED => 'published',
+            self::DRAFT => 'draft',
+            self::PENDING => 'pending',
+        };
+    }
+
     public function label(): string
     {
         return match ($this) {

@@ -15,26 +15,27 @@ use LarabizCMS\Core\DataTables\Components\Column;
 
 class PostDatatable extends DataTable
 {
-    protected ?string $dataUrl = '/posts';
+    protected ?string $dataUrl = '/blog/posts';
 
-    protected ?string $bulkActionUrl = '/posts/bulk';
+    protected ?string $bulkActionUrl = '/blog/posts/bulk';
 
-    protected ?string $deleteUrl = '/posts/{id}';
+    protected ?string $deleteUrl = '/blog/posts/{id}';
 
     protected ?string $editUrl = '/admin-cp/posts/{id}/edit';
 
     public function columns(): array
     {
         return [
-			Column::make('status'),
-			Column::make('created_at')->disabledFlex()->width(200)->format(Column::FORMAT_DATETIME)
+			Column::make('title')->minWidth(150),
+			Column::make('status')->format(Column::FORMAT_STATUS),
+			Column::make('created_at')->format(Column::FORMAT_DATETIME)
 		];
     }
 
     public function bulkActions(): array
     {
         return [
-			
+			BulkAction::make('delete'),
 		];
     }
 }

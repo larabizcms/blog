@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('post_id')
                 ->constrained('posts')
                 ->cascadeOnDelete();
-            $table->foreignId('taxonomy_id')
+            $table->foreignUuid('taxonomy_id')
                 ->constrained('taxonomies')
                 ->cascadeOnDelete();
 

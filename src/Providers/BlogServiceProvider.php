@@ -28,6 +28,7 @@ class BlogServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
         $this->bindingRepositories($this->app['config']->get('blog.repositories', []));
+        $this->loadCustomizer(__DIR__ . '/../customizer.php');
     }
 
     /**

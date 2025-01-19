@@ -11,7 +11,9 @@
     ],
     "autoload": {
         "psr-4": {
-            "LarabizCMS\\Modules\\Blog\\": "src/"
+            "LarabizCMS\\Modules\\Blog\\": "src/",
+            "LarabizCMS\\Modules\\Blog\\Database\\Factories\\": "database/factories/",
+            "LarabizCMS\\Modules\\Blog\\Database\\Seeders\\": "database/seeders/"
         }
     }
 }
