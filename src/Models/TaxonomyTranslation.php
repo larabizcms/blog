@@ -4,6 +4,7 @@ namespace LarabizCMS\Modules\Blog\Models;
 
 use LarabizCMS\Core\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use LarabizCMS\Modules\Blog\Database\Factories\TaxonomyTranslationFactory;
 
 class TaxonomyTranslation extends Model
 {
@@ -17,8 +18,8 @@ class TaxonomyTranslation extends Model
         'content',
     ];
 
-    protected static function newFactory()
+    protected static function newFactory(): TaxonomyTranslationFactory
     {
-        return \LarabizCMS\Modules\Blog\Database\Factories\TaxonomyTranslationFactory::new();
+        return TaxonomyTranslationFactory::new();
     }
 }

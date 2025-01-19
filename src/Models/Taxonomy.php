@@ -5,8 +5,12 @@ namespace LarabizCMS\Modules\Blog\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasAPI;
+use LarabizCMS\Modules\Blog\Database\Factories\TaxonomyFactory;
 
 class Taxonomy extends Model
 {
@@ -23,23 +27,30 @@ class Taxonomy extends Model
         'description',
     ];
 
-    protected static function newFactory()
+    protected static function newFactory(): TaxonomyFactory
     {
-        return \LarabizCMS\Modules\Blog\Database\Factories\TaxonomyFactory::new();
+        return TaxonomyFactory::new();
     }
 
-    public function posts()
+    public function posts(): BelongsToMany
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(
+            Post::class,
+            'post_has_taxonomies',
+            'taxonomy_id',
+            'post_id',
+            'id',
+            'id'
+        );
     }
 
-    public function parent()
+    public function parent(): BelongsTo
     {
-        return $this->belongsTo(Taxonomy::class, 'parent_id');
+        return $this->belongsTo(__CLASS__, 'parent_id');
     }
 
-    public function children()
+    public function children(): HasMany
     {
-        return $this->hasMany(Taxonomy::class, 'parent_id');
+        return $this->hasMany(__CLASS__, 'parent_id');
     }
 }

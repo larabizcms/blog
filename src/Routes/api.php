@@ -11,7 +11,7 @@
 |
 */
 
-use LarabizCMS\Modules\Blog\Http\Controllers\PostController;
+use LarabizCMS\Modules\Blog\Http\Controllers\APIs\PostController;
 
 Route::group(
     [

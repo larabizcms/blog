@@ -3,28 +3,22 @@
 namespace LarabizCMS\Modules\Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
 
 class PostRequest extends FormRequest
 {
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
-        return [
-            //
-        ];
-    }
+        $locale = $this->input('locale');
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
+        return [
+            'type' => ['required'],
+            'status' => ['required', Rule::in(PostStatus::all())],
+            'locale' => ['required', 'string', 'max:5', Rule::in(config('translatable.locales'))],
+            "{$locale}.title" => ['required', 'string', 'max:255'],
+            "{$locale}.slug" => ['required', 'string', 'max:255'],
+            "{$locale}.content" => ['required', 'string'],
+        ];
     }
 }

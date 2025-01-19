@@ -3,9 +3,13 @@
 namespace LarabizCMS\Modules\Blog\Models;
 
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasAPI;
+use LarabizCMS\Modules\Blog\Database\Factories\PostFactory;
+use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
 
 class Post extends Model
 {
@@ -16,6 +20,10 @@ class Post extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => PostStatus::class,
+    ];
+
     public $translatedAttributes = [
         'locale',
         'title',
@@ -24,8 +32,25 @@ class Post extends Model
         'content',
     ];
 
-    protected static function newFactory()
+    protected static function newFactory(): PostFactory
     {
-        return \LarabizCMS\Modules\Blog\Database\Factories\PostFactory::new();
+        return PostFactory::new();
+    }
+
+    public function taxonomies(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Taxonomy::class,
+            'post_has_taxonomies',
+            'post_id',
+            'taxonomy_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function scopeInApiGuest(Builder $builder): Builder
+    {
+        return $builder->where('status', PostStatus::PUBLISHED);
     }
 }

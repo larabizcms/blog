@@ -1,8 +1,7 @@
 <?php
 
-namespace LarabizCMS\Modules\Blog\Http\Controllers;
+namespace LarabizCMS\Modules\Blog\Http\Controllers\APIs;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -28,11 +27,6 @@ class PostController extends APIController
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
         //
@@ -44,7 +38,7 @@ class PostController extends APIController
 
         $post = $this->postRepository->api()
             ->where('type', $type)
-            ->with(['translations' => fn ($q) => $q->where('locale', app()->getLocale())])
+            ->withTranslation()
             ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
             ->first();
 
@@ -53,22 +47,11 @@ class PostController extends APIController
         return $this->restSuccess($post);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy(string $id)
     {
         //
