@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('locale', 10);
             $table->string('title');
             $table->string('slug', 190)->index();
-            $table->text('content')->nullable();
+            $table->longText('content')->nullable();
             $table->timestamps();
 
             $table->unique(['post_id', 'locale']);
