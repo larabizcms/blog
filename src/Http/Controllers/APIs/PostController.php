@@ -21,10 +21,12 @@ class PostController extends APIController
     public function index(Request $request, string $type): JsonResponse
     {
         $type = Str::singular($type);
+        $locale = $request->getLocale();
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
                 ->withTranslation()
+                ->translatedIn($locale)
                 ->where('type', $type)
                 ->paginate($this->getQueryLimit($request))
         );
@@ -37,7 +39,7 @@ class PostController extends APIController
         return $this->restSuccess([], 'Post created successfully');
     }
 
-    public function show(string $type, string $slug): JsonResponse
+    public function show(Request $request, string $type, string $slug): JsonResponse
     {
         $type = Str::singular($type);
 
