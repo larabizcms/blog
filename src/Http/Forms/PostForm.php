@@ -51,7 +51,7 @@ class PostForm extends FormBuilder
             Container::make()->add(
                 [
                     Field::language('locale')->value($locale),
-                    Field::text("{$locale}.thumbnail")->value($this->model?->thumbnail),
+                    Field::image("{$locale}.thumbnail")->value($this->model?->thumbnail),
                     Field::text("{$locale}.slug")->value($this->model?->slug),
                     Field::select('status')
                         ->options(PostStatus::options())

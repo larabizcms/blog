@@ -31,7 +31,7 @@ class PostController extends APIController
         );
     }
 
-    public function store(PostRequest $request): JsonResponse
+    public function store(string $type, PostRequest $request): JsonResponse
     {
         DB::transaction(fn () => $this->postRepository->create($request->safe()->all()));
 
@@ -53,7 +53,7 @@ class PostController extends APIController
         return $this->restSuccess($post);
     }
 
-    public function update(PostRequest $request, $id): JsonResponse
+    public function update(PostRequest $request, string $type, $id): JsonResponse
     {
         $post = $this->postRepository->find($id);
 
@@ -64,7 +64,7 @@ class PostController extends APIController
         return $this->restSuccess([], 'Post updated successfully');
     }
 
-    public function destroy(string $id): JsonResponse
+    public function destroy(string $type, string $id): JsonResponse
     {
         $post = $this->postRepository->find($id);
 
@@ -75,7 +75,7 @@ class PostController extends APIController
         return $this->restSuccess([], 'Post deleted successfully');
     }
 
-    public function bulk(PostActionsRequest $request): JsonResponse
+    public function bulk(string $type, PostActionsRequest $request): JsonResponse
     {
         $action = $request->post('action');
         $ids = $request->post('ids');

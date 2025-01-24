@@ -46,7 +46,7 @@ class PostController extends AdminController
 
         $page->fill(['title' => __('New Post'), 'description' => __('New Post')]);
 
-        $page->add(PostForm::make(['method' => 'POST', 'action' => '/blog/posts']));
+        $page->add(PostForm::make(['method' => 'POST', 'action' => '/blog/internal/posts']));
 
         return $page;
     }
@@ -66,7 +66,7 @@ class PostController extends AdminController
         Breadcrumb::add(__('Posts'), '/admin-cp/posts');
         Breadcrumb::add(__('Edit Post: :name', ['name' => $model->name]));
 
-        $page->add(PostForm::make(['method' => 'PUT', 'action' => "/blog/posts/{$model->id}"])->withModel($model));
+        $page->add(PostForm::make(['method' => 'PUT', 'action' => "/blog/internal/posts/{$model->id}"])->withModel($model));
 
         return $page;
     }
