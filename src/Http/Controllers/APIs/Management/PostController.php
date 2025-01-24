@@ -1,11 +1,13 @@
 <?php
 
-namespace LarabizCMS\Modules\Blog\Http\Controllers\APIs;
+namespace LarabizCMS\Modules\Blog\Http\Controllers\APIs\Management;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use LarabizCMS\Core\Http\Controllers\APIController;
+use LarabizCMS\Modules\Blog\Http\Requests\PostRequest;
 use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
 class PostController extends APIController
@@ -19,16 +21,20 @@ class PostController extends APIController
     public function index(Request $request, string $type): JsonResponse
     {
         $type = Str::singular($type);
-        $locale = $request->getLocale();
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
-                ->wherePublished()
                 ->withTranslation()
-                ->translatedIn($locale)
                 ->where('type', $type)
                 ->paginate($this->getQueryLimit($request))
         );
+    }
+
+    public function store(PostRequest $request): JsonResponse
+    {
+        DB::transaction(fn () => $this->postRepository->create($request->safe()->all()));
+
+        return $this->restSuccess([], 'Post created successfully');
     }
 
     public function show(Request $request, string $type, string $slug): JsonResponse
@@ -44,5 +50,27 @@ class PostController extends APIController
         abort_if($post === null, 404, __('Post not found'));
 
         return $this->restSuccess($post);
+    }
+
+    public function update(PostRequest $request, $id): JsonResponse
+    {
+        $post = $this->postRepository->find($id);
+
+        abort_if($post === null, 404, __('Post not found'));
+
+        DB::transaction(fn () => $post->update($request->safe()->all()));
+
+        return $this->restSuccess([], 'Post updated successfully');
+    }
+
+    public function destroy(string $id): JsonResponse
+    {
+        $post = $this->postRepository->find($id);
+
+        abort_if($post === null, 404, __('Post not found'));
+
+        $post->delete();
+
+        return $this->restSuccess([], 'Post deleted successfully');
     }
 }

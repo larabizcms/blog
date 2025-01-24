@@ -7,14 +7,14 @@
  * @link       https://larabiz.com
  */
 
-namespace LarabizCMS\Modules\Blog\Http\Controllers\APIs;
+namespace LarabizCMS\Modules\Blog\Http\Controllers\APIs\Management;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LarabizCMS\Core\Http\Controllers\APIController;
-use LarabizCMS\Modules\Blog\Http\Requests\TaxonomyRequest;
 use LarabizCMS\Modules\Blog\Http\Requests\TaxonomyActionsRequest;
+use LarabizCMS\Modules\Blog\Http\Requests\TaxonomyRequest;
 use LarabizCMS\Modules\Blog\Repositories\TaxonomyRepository;
 
 class TaxonomyController extends APIController

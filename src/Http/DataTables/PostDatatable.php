@@ -15,11 +15,11 @@ use LarabizCMS\Core\DataTables\Components\Column;
 
 class PostDatatable extends DataTable
 {
-    protected ?string $dataUrl = '/blog/posts';
+    protected ?string $dataUrl = '/blog/internal/posts';
 
-    protected ?string $bulkActionUrl = '/blog/posts/bulk';
+    protected ?string $bulkActionUrl = '/blog/internal/posts/bulk';
 
-    protected ?string $deleteUrl = '/blog/posts/{id}';
+    protected ?string $deleteUrl = '/blog/internal/posts/{id}';
 
     protected ?string $editUrl = '/admin-cp/posts/{id}/edit';
 

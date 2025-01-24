@@ -11,9 +11,7 @@
 |
 */
 
-use LarabizCMS\Core\Facades\RouteResource;
 use LarabizCMS\Modules\Blog\Http\Controllers\APIs\PostController;
-use LarabizCMS\Modules\Blog\Http\Controllers\APIs\TaxonomyController;
 
 Route::group(
     [
@@ -21,19 +19,19 @@ Route::group(
         'middleware' => ['api'],
     ],
     function () {
+        Route::group(
+            [
+                'prefix' => 'internal',
+                'middleware' => [
+                    ...config('larabizcms.auth_middleware', []),
+                ]
+            ],
+            function () {
+                require __DIR__ . '/apis/internal.php';
+            }
+        );
+
         Route::get('{type}', [PostController::class, 'index']);
-
         Route::get('{type}/{id}', [PostController::class, 'show']);
-
-        Route::group(['middleware' => [...config('larabizcms.auth_middleware', [])]], function () {
-            Route::post('{type}', [PostController::class, 'store']);
-
-            Route::put('{type}/{id}', [PostController::class, 'update']);
-
-            Route::delete('{type}/{id}', [PostController::class, 'destroy']);
-        });
-
-        RouteResource::api('taxonomies', TaxonomyController::class)
-            ->guestable();
     }
 );

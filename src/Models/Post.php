@@ -49,7 +49,7 @@ class Post extends Model
         );
     }
 
-    public function scopeInApiGuest(Builder $builder): Builder
+    public function scopeWherePublished(Builder $builder): Builder
     {
         return $builder->where('status', PostStatus::PUBLISHED);
     }
