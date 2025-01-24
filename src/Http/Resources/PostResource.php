@@ -28,7 +28,7 @@ class PostResource extends JsonResource
             'content' => $this->resource->content,
             'thumbnail' => $this->resource->thumbnail?->getConversionResponse(),
             'created_at' => $this->resource->created_at,
-            'updated_at' => $this->resource->updated_at
+            'updated_at' => $this->resource->updated_at,
         ];
     }
 }

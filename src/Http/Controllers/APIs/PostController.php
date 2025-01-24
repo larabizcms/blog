@@ -23,8 +23,8 @@ class PostController extends APIController
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
-                ->wherePublished()
                 ->withTranslation()
+                ->wherePublished()
                 ->translatedIn($locale)
                 ->where('type', $type)
                 ->paginate($this->getQueryLimit($request))
