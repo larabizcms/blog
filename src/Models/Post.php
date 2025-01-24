@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasAPI;
+use LarabizCMS\Core\Translations\Contracts\Translatable as WithTranslatable;
 use LarabizCMS\Core\Translations\Traits\Translatable;
 use LarabizCMS\Modules\Blog\Database\Factories\PostFactory;
+use LarabizCMS\Modules\Blog\Http\Resources\PostResource;
 use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
 
-class Post extends Model
+class Post extends Model implements WithTranslatable
 {
     use HasFactory, Translatable, HasAPI;
 
@@ -30,11 +32,17 @@ class Post extends Model
         'slug',
         'description',
         'content',
+        'thumbnail',
     ];
 
     protected static function newFactory(): PostFactory
     {
         return PostFactory::new();
+    }
+
+    public static function getResource(): string
+    {
+        return PostResource::class;
     }
 
     public function taxonomies(): BelongsToMany
@@ -52,5 +60,15 @@ class Post extends Model
     public function scopeWherePublished(Builder $builder): Builder
     {
         return $builder->where('status', PostStatus::PUBLISHED);
+    }
+
+    public function publish(): bool
+    {
+        return $this->update(['status' => PostStatus::PUBLISHED]);
+    }
+
+    public function draft(): bool
+    {
+        return $this->update(['status' => PostStatus::DRAFT]);
     }
 }

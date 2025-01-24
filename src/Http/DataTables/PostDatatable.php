@@ -12,6 +12,7 @@ namespace LarabizCMS\Modules\Blog\Http\DataTables;
 use LarabizCMS\Core\DataTables\Abstracts\DataTable;
 use LarabizCMS\Core\DataTables\Components\BulkAction;
 use LarabizCMS\Core\DataTables\Components\Column;
+use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
 class PostDatatable extends DataTable
 {
@@ -34,8 +35,14 @@ class PostDatatable extends DataTable
 
     public function bulkActions(): array
     {
+        $actions = app(PostRepository::class)->bulkActions();
         return [
-			BulkAction::make('delete'),
-		];
+            ...array_map(
+                function ($action) {
+                    return BulkAction::make($action);
+                },
+                $actions
+            )
+        ];
     }
 }

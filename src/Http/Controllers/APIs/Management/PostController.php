@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use LarabizCMS\Core\Http\Controllers\APIController;
+use LarabizCMS\Modules\Blog\Http\Requests\PostActionsRequest;
 use LarabizCMS\Modules\Blog\Http\Requests\PostRequest;
 use LarabizCMS\Modules\Blog\Repositories\PostRepository;
 
@@ -72,5 +73,15 @@ class PostController extends APIController
         $post->delete();
 
         return $this->restSuccess([], 'Post deleted successfully');
+    }
+
+    public function bulk(PostActionsRequest $request): JsonResponse
+    {
+        $action = $request->post('action');
+        $ids = $request->post('ids');
+
+        DB::transaction(fn () => $this->postRepository->bulk($action, $ids));
+
+        return $this->restSuccess([], 'Post updated successfully');
     }
 }

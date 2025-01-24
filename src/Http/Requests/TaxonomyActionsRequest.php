@@ -21,7 +21,7 @@ class TaxonomyActionsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'action' => ['required', Rule::in(app(TaxonomyRepository::class)->bulkActions())],

@@ -19,7 +19,7 @@ class PostController extends APIController
     public function index(Request $request, string $type): JsonResponse
     {
         $type = Str::singular($type);
-        $locale = $request->getLocale();
+        $locale = app()->getLocale();
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
