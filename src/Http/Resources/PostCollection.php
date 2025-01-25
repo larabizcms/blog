@@ -28,6 +28,7 @@ class PostCollection extends ResourceCollection
 					'title' => $item->title,
 					'slug' => $item->slug,
 					'description' => $item->description,
+                    'status' => $item->status,
 					'thumbnail' => $item->thumbnail?->getConversionResponse(),
 					'created_at' => $item->created_at,
 					'updated_at' => $item->updated_at,
