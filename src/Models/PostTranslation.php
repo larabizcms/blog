@@ -52,6 +52,10 @@ class PostTranslation extends Model implements Sitemapable
 
     public function setThumbnailAttribute($value): void
     {
+        if (! $value) {
+            return;
+        }
+
         $this->attachMedia($value, 'thumbnail');
     }
 
