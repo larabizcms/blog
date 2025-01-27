@@ -5,6 +5,7 @@ namespace LarabizCMS\Modules\Blog\Models;
 use Illuminate\Database\Eloquent\Builder;
 use LarabizCMS\Core\Contracts\Sitemapable;
 use LarabizCMS\Core\Media\Traits\HasMedia;
+use LarabizCMS\Core\Models\Media;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasSlug;
 use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
@@ -39,11 +40,12 @@ class PostTranslation extends Model implements Sitemapable
 
     public function scopeForSitemap(Builder $builder): Builder
     {
-        return $builder->join('posts', 'posts.id', '=', 'post_translations.post_id')
+        return $builder->with(['media'])
+            ->join('posts', 'posts.id', '=', 'post_translations.post_id')
             ->where('posts.status', PostStatus::PUBLISHED->value);
     }
 
-    public function getThumbnailAttribute(): ?\LarabizCMS\Core\Models\Media
+    public function getThumbnailAttribute(): ?Media
     {
         return $this->getFirstMedia('thumbnail');
     }
@@ -55,9 +57,15 @@ class PostTranslation extends Model implements Sitemapable
 
     public function toSitemapTag(): Url
     {
-        return Url::create("/{$this->locale}/blog/{$this->slug}")
+        $url = Url::create("/{$this->locale}/blog/{$this->slug}")
             ->setLastModificationDate($this->updated_at)
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
             ->setPriority(0.8);
+
+        if ($this->thumbnail) {
+            $url->addImage($this->thumbnail->getUrl());
+        }
+
+        return $url;
     }
 }
