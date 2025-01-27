@@ -3,11 +3,8 @@
 namespace LarabizCMS\Modules\Blog\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use LarabizCMS\Core\Casts\Media;
 use LarabizCMS\Core\Contracts\Sitemapable;
-use LarabizCMS\Core\Media\Traits\HasMediaColumns;
-use LarabizCMS\Core\Models\Media as MediaModel;
+use LarabizCMS\Core\Media\Traits\HasMedia;
 use LarabizCMS\Core\Models\Model;
 use LarabizCMS\Core\Traits\HasSlug;
 use LarabizCMS\Modules\Blog\Models\Enums\PostStatus;
@@ -15,7 +12,7 @@ use Spatie\Sitemap\Tags\Url;
 
 class PostTranslation extends Model implements Sitemapable
 {
-    use HasSlug, HasMediaColumns;
+    use HasSlug, HasMedia;
 
     protected $table = 'post_translations';
 
@@ -27,11 +24,11 @@ class PostTranslation extends Model implements Sitemapable
         'thumbnail',
     ];
 
-    protected $casts = [
-        'thumbnail' => Media::class,
+    public $mediaChannels = [
+        'thumbnail',
     ];
 
-    public $mediaColumns = [
+    protected $appends = [
         'thumbnail',
     ];
 
@@ -40,15 +37,20 @@ class PostTranslation extends Model implements Sitemapable
         return 'posts';
     }
 
-    public function media(): BelongsTo
-    {
-        return $this->belongsTo(MediaModel::class, 'thumbnail', 'id');
-    }
-
     public function scopeForSitemap(Builder $builder): Builder
     {
         return $builder->join('posts', 'posts.id', '=', 'post_translations.post_id')
             ->where('posts.status', PostStatus::PUBLISHED->value);
+    }
+
+    public function getThumbnailAttribute(): ?\LarabizCMS\Core\Models\Media
+    {
+        return $this->getFirstMedia('thumbnail');
+    }
+
+    public function setThumbnailAttribute($value): void
+    {
+        $this->attachMedia($value, 'thumbnail');
     }
 
     public function toSitemapTag(): Url

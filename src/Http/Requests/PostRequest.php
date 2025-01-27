@@ -18,6 +18,7 @@ class PostRequest extends FormRequest
             "{$locale}.title" => ['required', 'string', 'max:255'],
             "{$locale}.slug" => ['nullable', 'string', 'max:255'],
             "{$locale}.content" => ['required', 'string'],
+            "{$locale}.thumbnail" => ['required', 'uuid', 'exists:media,id'],
         ];
     }
 }

@@ -53,7 +53,8 @@ class PostController extends AdminController
 
     public function edit(string $id): Page
     {
-        $model = $this->postRepository->find($id);
+        $locale = $this->getLanguage();
+        $model = $this->postRepository->withTranslation($locale, ['media'])->find($id);
 
         abort_if($model === null, 404, __('Post not found'));
 
@@ -66,7 +67,8 @@ class PostController extends AdminController
         Breadcrumb::add(__('Posts'), '/admin-cp/posts');
         Breadcrumb::add(__('Edit Post: :name', ['name' => $model->name]));
 
-        $page->add(PostForm::make(['method' => 'PUT', 'action' => "/blog/internal/posts/{$model->id}"])->withModel($model));
+        $page->add(PostForm::make(['method' => 'PUT', 'action' => "/blog/internal/posts/{$model->id}"])
+            ->withModel($model));
 
         return $page;
     }

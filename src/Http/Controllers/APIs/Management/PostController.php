@@ -25,7 +25,7 @@ class PostController extends APIController
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
-                ->withTranslation()
+                ->withTranslation(with: ['media'])
                 ->where('type', $type)
                 ->paginate($this->getQueryLimit($request))
         );
@@ -44,7 +44,7 @@ class PostController extends APIController
 
         $post = $this->postRepository->api()
             ->where('type', $type)
-            ->withTranslation()
+            ->withTranslation(with: ['media'])
             ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
             ->first();
 

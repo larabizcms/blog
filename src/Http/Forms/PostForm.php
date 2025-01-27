@@ -32,7 +32,6 @@ class PostForm extends FormBuilder
     public function build(): static
     {
         $this->successAction()->navigate(admin_url('posts'))->after(300);
-
         $locale = $this->getLanguage();
         $this->model?->setDefaultLocale($locale);
 
