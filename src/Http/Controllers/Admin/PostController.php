@@ -60,12 +60,12 @@ class PostController extends AdminController
 
         $page = Page::make(
             [
-                'title' => __('Edit Post: :name', ['name' => $model->name]),
-                'description' => __('Edit Post: :name', ['name' => $model->name]),
+                'title' => __('Edit Post: :name', ['name' => $model->title]),
+                'description' => __('Edit Post: :name', ['name' => $model->title]),
             ]
         );
         Breadcrumb::add(__('Posts'), '/admin-cp/posts');
-        Breadcrumb::add(__('Edit Post: :name', ['name' => $model->name]));
+        Breadcrumb::add(__('Edit Post: :name', ['name' => $model->title]));
 
         $page->add(PostForm::make(['method' => 'PUT', 'action' => "/blog/internal/posts/{$model->id}"])
             ->withModel($model));

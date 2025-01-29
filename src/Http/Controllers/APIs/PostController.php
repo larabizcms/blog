@@ -45,4 +45,29 @@ class PostController extends APIController
 
         return $this->restSuccess($post);
     }
+
+    public function related(Request $request, string $type, string $slug): JsonResponse
+    {
+        $post = $this->postRepository->api()
+            ->with(['taxonomies'])
+            ->where('type', $type)
+            ->wherePublished()
+            ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
+            ->first();
+
+        abort_if($post === null, 404, __('Post not found'));
+
+        $type = Str::singular($type);
+        $locale = app()->getLocale();
+
+        return $this->restSuccess(
+            $this->postRepository->api($request->all())
+                ->withTranslation(with: ['media'])
+                ->wherePublished()
+                ->translatedIn($locale)
+                ->relatedBy($post)
+                ->where('type', $type)
+                ->paginate($this->getQueryLimit($request))
+        );
+    }
 }

@@ -68,6 +68,15 @@ class Post extends Model implements WithTranslatable
         return $builder->where('status', PostStatus::PUBLISHED);
     }
 
+    public function scopeRelatedBy(Builder $builder, Post $post): Builder
+    {
+        return $builder->where('id', '!=', $post->id)
+            ->whereHas(
+                'taxonomies',
+                fn ($q) => $q->whereIn('taxonomy_id', $post->taxonomies->pluck('id'))
+            );
+    }
+
     public function publish(): bool
     {
         return $this->update(['status' => PostStatus::PUBLISHED]);
