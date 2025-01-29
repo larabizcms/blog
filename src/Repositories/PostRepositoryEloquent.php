@@ -22,6 +22,26 @@ class PostRepositoryEloquent extends EloquentRepository implements PostRepositor
 {
     use HasBulkActions;
 
+    // public function createEntity(array $attributes)
+    // {
+    //     $model = $this->makeModel()->create($attributes);
+
+    //     if (isset($attributes['thumbnail'])) {
+    //         $model->attachMedia($attributes['thumbnail'], 'thumbnail');
+    //     }
+
+    //     return $model;
+    // }
+
+    // public function updateEntity(Model $entity, array $attributes): Model
+    // {
+    //     if (isset($attributes['thumbnail'])) {
+    //         $entity->attachMedia($attributes['thumbnail'], 'thumbnail');
+    //     }
+
+    //     return $entity->update($attributes);
+    // }
+
     public function bulkActions(): array
     {
         return [

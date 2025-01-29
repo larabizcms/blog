@@ -33,7 +33,7 @@ class PostController extends APIController
 
     public function store(string $type, PostRequest $request): JsonResponse
     {
-        DB::transaction(fn () => $this->postRepository->create($request->safe()->all()));
+        DB::transaction(fn () => $this->postRepository->createEntity($request->safe()->all()));
 
         return $this->restSuccess([], 'Post created successfully');
     }
@@ -59,7 +59,7 @@ class PostController extends APIController
 
         abort_if($post === null, 404, __('Post not found'));
 
-        DB::transaction(fn () => $post->update($request->safe()->all()));
+        DB::transaction(fn () => $this->postRepository->updateEntity($post, $request->safe()->all()));
 
         return $this->restSuccess([], 'Post updated successfully');
     }
