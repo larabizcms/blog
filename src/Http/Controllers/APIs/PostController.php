@@ -23,7 +23,7 @@ class PostController extends APIController
 
         return $this->restSuccess(
             $this->postRepository->api($request->all())
-                ->withTranslation()
+                ->withTranslation(with: ['media'])
                 ->wherePublished()
                 ->translatedIn($locale)
                 ->where('type', $type)
@@ -37,7 +37,7 @@ class PostController extends APIController
 
         $post = $this->postRepository->api()
             ->where('type', $type)
-            ->withTranslation()
+            ->withTranslation(with: ['media'])
             ->whereHas('translations', fn ($q) => $q->where('slug', $slug))
             ->first();
 
