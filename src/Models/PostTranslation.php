@@ -33,6 +33,10 @@ class PostTranslation extends Model implements Sitemapable
         'thumbnail',
     ];
 
+    // protected $casts = [
+    //     'thumbnail' => \LarabizCMS\Core\Casts\Media::class,
+    // ];
+
     public static function getSitemapPage(): string
     {
         return 'posts';
@@ -56,7 +60,8 @@ class PostTranslation extends Model implements Sitemapable
             return;
         }
 
-        $this->attachMedia($value, 'thumbnail');
+        // $this->attachMedia($value, 'thumbnail');
+        $this->setMedia($value, 'thumbnail');
     }
 
     public function toSitemapTag(): Url
