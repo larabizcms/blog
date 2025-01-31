@@ -70,11 +70,11 @@ class Post extends Model implements WithTranslatable
 
     public function scopeRelatedBy(Builder $builder, Post $post): Builder
     {
-        return $builder->where('id', '!=', $post->id)
-            ->whereHas(
-                'taxonomies',
-                fn ($q) => $q->whereIn('taxonomy_id', $post->taxonomies->pluck('id'))
-            );
+        return $builder->where('id', '!=', $post->id);
+            // ->whereHas(
+            //     'taxonomies',
+            //     fn ($q) => $q->whereIn('taxonomy_id', $post->taxonomies->pluck('id'))
+            // );
     }
 
     public function publish(): bool

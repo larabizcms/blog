@@ -1,0 +1,15 @@
+{
+    "Information": "Information",
+    "Sidebar": "Sidebar",
+    "Posts": "Posts",
+    "New Post": "New Post",
+    "Post not found": "Post not found",
+    "Edit Post: :name": "Edit Post: :name",
+    "Taxonomies": "Taxonomies",
+    "New Taxonomy": "New Taxonomy",
+    "Taxonomy not found": "Taxonomy not found",
+    "Edit Taxonomy: :name": "Edit Taxonomy: :name",
+    "Published": "Published",
+    "Draft": "Draft",
+    "Pending": "Pending"
+}
