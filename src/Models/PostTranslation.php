@@ -26,7 +26,7 @@ class PostTranslation extends Model implements Sitemapable
     ];
 
     public $mediaChannels = [
-        'thumbnail',
+        'thumbnail' => ['post-thumb'],
     ];
 
     protected $appends = [

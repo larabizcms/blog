@@ -55,7 +55,9 @@ class PostController extends APIController
 
     public function update(PostRequest $request, string $type, $id): JsonResponse
     {
-        $post = $this->postRepository->find($id);
+        $locale = $request->input('locale');
+
+        $post = $this->postRepository->withTranslation($locale, with: ['media'])->find($id);
 
         abort_if($post === null, 404, __('Post not found'));
 

@@ -2,6 +2,8 @@
 
 namespace LarabizCMS\Modules\Blog\Providers;
 
+use Intervention\Image\Image;
+use LarabizCMS\Core\Media\Contracts\ImageConversion;
 use LarabizCMS\Core\Providers\ServiceProvider;
 
 class BlogServiceProvider extends ServiceProvider
@@ -28,7 +30,14 @@ class BlogServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
         $this->bindingRepositories($this->app['config']->get('blog.repositories', []));
-        $this->loadCustomizer(__DIR__ . '/../customizer.php');
+        $this->loadCustomizer(__DIR__.'/../customizer.php');
+
+        $this->app[ImageConversion::class]->register(
+            'post-thumb',
+            function (Image $image) {
+                return $image->fit(365, 140);
+            }
+        );
     }
 
     /**
@@ -63,13 +72,13 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function registerViews(): void
     {
-        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
+        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'src/Resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-module-views']);
+        ], ['views', $this->moduleNameLower.'-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -81,7 +90,7 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function registerTranslations(): void
     {
-        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
+        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
@@ -96,8 +105,8 @@ class BlogServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
+            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
+                $paths[] = $path.'/modules/'.$this->moduleNameLower;
             }
         }
         return $paths;
