@@ -48,6 +48,7 @@ class PostController extends APIController
 
     public function related(Request $request, string $type, string $slug): JsonResponse
     {
+        $type = Str::singular($type);
         $post = $this->postRepository->api()
             ->with(['taxonomies'])
             ->where('type', $type)
