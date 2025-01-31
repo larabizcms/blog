@@ -32,7 +32,7 @@ Route::group(
         );
 
         Route::get('{type}', [PostController::class, 'index']);
-        Route::get('{type}/related/{slug}', [PostController::class, 'related']);
+        Route::get('{type}/{slug}/related', [PostController::class, 'related']);
         Route::get('{type}/{id}', [PostController::class, 'show']);
     }
 );
