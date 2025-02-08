@@ -26,7 +26,10 @@ class TaxonomyController extends APIController
 
     public function index(Request $request): JsonResponse
     {
-        $models = $this->taxonomyRepository->api($request->all())->paginate($this->getQueryLimit($request));
+        $models = $this->taxonomyRepository
+            ->api($request->all())
+            ->withTranslation()
+            ->paginate($this->getQueryLimit($request));
 
         return $this->restSuccess($models);
     }

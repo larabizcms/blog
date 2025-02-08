@@ -34,6 +34,9 @@ class TaxonomyForm extends FormBuilder
 
         $locale = $this->getLanguage();
         $this->model?->setDefaultLocale($locale);
+        $parents = Taxonomy::withTranslation()->get()
+            ->pluck('name', 'id')
+            ->toArray();
 
         $infoCard = Card::make(['title' => __('Information')]);
         $infoCard->add(
@@ -51,8 +54,13 @@ class TaxonomyForm extends FormBuilder
                 [
                     Field::language('locale')->value($locale),
                     Field::text("{$locale}.slug")->value($this->model?->slug),
-                    Field::text('type')->value($this->model?->type),
-                    Field::text('parent_id')->value($this->model?->parent_id)
+                    Field::text('type')
+                        ->value($this->model?->type)
+                        ->default('category'),
+                    Field::select('parent_id')
+                        ->autocomplete()
+                        ->options($parents)
+                        ->value($this->model?->parent_id),
                 ]
             )
         );

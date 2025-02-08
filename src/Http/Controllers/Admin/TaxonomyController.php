@@ -46,7 +46,7 @@ class TaxonomyController extends AdminController
 
         $page->fill(['title' => __('New Taxonomy'), 'description' => __('New Taxonomy')]);
 
-        $page->add(TaxonomyForm::make(['method' => 'POST', 'action' => '/blog/taxonomies']));
+        $page->add(TaxonomyForm::make(['method' => 'POST', 'action' => '/blog/internal/taxonomies']));
 
         return $page;
     }
@@ -66,7 +66,7 @@ class TaxonomyController extends AdminController
         Breadcrumb::add(__('Taxonomies'), '/admin-cp/taxonomies');
         Breadcrumb::add(__('Edit Taxonomy: :name', ['name' => $model->name]));
 
-        $page->add(TaxonomyForm::make(['method' => 'PUT', 'action' => "/blog/taxonomies/{$model->id}"])->withModel($model));
+        $page->add(TaxonomyForm::make(['method' => 'PUT', 'action' => "/blog/internal/taxonomies/{$model->id}"])->withModel($model));
 
         return $page;
     }
